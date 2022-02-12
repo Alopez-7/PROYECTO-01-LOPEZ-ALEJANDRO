@@ -9,7 +9,7 @@ from unicodedata import category
 @dataclass
 class ItemSales:
     
-    """Class for keeping track of an item in inventory."""
+    """Objeto para contener informacion de los productos."""
     productName: str =''
     idProduct: str =""
     category:str =""
@@ -18,6 +18,7 @@ class ItemSales:
 
 @dataclass
 class TopSearches:
+    """Objeto para contener informacion de busquedas de los productos."""
     productName: str =''
     idProduct: str =""
     searches: int=0
