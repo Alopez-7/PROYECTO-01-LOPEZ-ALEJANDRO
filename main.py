@@ -1,12 +1,29 @@
+from audioop import avg
 from functools import total_ordering
 from hashlib import new
-from math import prod
+from math import floor, prod
 from typing import List
 from unicodedata import category
 from lifestore_file import lifestore_products, lifestore_sales,lifestore_searches
 from classes import ItemSales, TopSearches,ItemReviews,ProductSales,ProductSalesDate
 from pprint import pprint
 from datetime import datetime
+from calendar import monthrange
+
+dictMonths={
+        1:"Enero",
+        2:"Febrero",
+        3:"Marzo",
+        4:"Abril",
+        5:"Mayo",
+        6:"Junio",
+        7:"Julio",
+        8:"Agosto",
+        9:"Septiembre",
+        10:"Octubre",
+        11:"Noviembre",
+        12:"Diciembre"
+    }
 
 #Generar e instanciar dataclass ItemSales contenedora de lista lifestore_products
 sales =  [ItemSales()]
@@ -195,35 +212,35 @@ def anualProfit():
         if not sale.returned:
             totalEarnings += sale.price
     print(f'Ganancia anual: ${totalEarnings}')
+    print("------------------------------------------------------------------------------------------------------------------------")
+    print(f'Ganancia promedio Mensual: ${totalEarnings/12}')
 
 def monthlySales():
-    dictMonths={
-        1:"Enero",
-        2:"Febrero",
-        3:"Marzo",
-        4:"Abril",
-        5:"Mayo",
-        6:"Junio",
-        7:"Julio",
-        8:"Agosto",
-        9:"Septiembre",
-        10:"Octubre",
-        11:"Noviembre",
-        12:"Diciembre"
-    }
+    
     mSales={}
-    print("----------------------------------------")
+    print("------------------------------------------------------------------------------------------------------------------------")
     for month in range(1,13):
         mSales[dictMonths[month]]=0
         for sale in listOfSales:
             if int(sale.month)==month:
                 
                 mSales[dictMonths[month]]+=1
-    print("VENTAS POR MES")
+    print("VENTAS PROMEDIO POR MES")
+    avgSM=0
+    for value in mSales.values():
+        avgSM+=value
     
-    for key,value in mSales.items():
-        print(f'Mes: {key} Ventas: {value}')
+    print(f'{floor(avgSM/12.)} ventas')
+    print("------------------------------------------------------------------------------------------------------------------------")
+    print("VENTAS POR MES")
+    sort_orders = sorted(mSales.items(), key=lambda x: x[1], reverse=True)
+ 
+    for value in sort_orders:
+        print(f'Mes: {value[0]} Ventas: {value[1]}')
 
+  
+            
+            
 
 
 print("GENERANDO REPORTE")
@@ -239,5 +256,6 @@ worstProductSearchesByCat(makeCategoriesList(sales))
 scoreAvg()
 anualProfit()
 monthlySales()
+
 
 
