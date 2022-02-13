@@ -1,3 +1,4 @@
+from ast import While
 from audioop import avg
 from functools import total_ordering
 from hashlib import new
@@ -24,6 +25,43 @@ dictMonths={
         11:"Noviembre",
         12:"Diciembre"
     }
+def logIn():
+    print("<<<<<<<<<Bienvenido>>>>>>>>>")
+    i=0
+    while True:
+        if i == 3:
+            print ("Usuario incorrecto" , "SISTEMA BLOQUEADO")
+            exit()
+        print("-------------------------")
+        print("Iniciar Sesion")
+        username = input("Usernaeme:")
+        if username == "SuperUser" :
+            print ("Escriba Contraseña")
+            break
+
+        else :
+            i+=1
+            print (f'Nombre de usuario incorrecto. quedan {3-i} intentos')
+    i=0
+    while True:
+        if i == 3:
+            print ("Contraseña incorrecta" , "SISTEMA BLOQUEADO")
+            exit()
+        password = input ("Password:")
+        if password  == "admin" :
+            print ("ACCESO CONCEDIDO")
+            print (f'<<Bienvnido {username} >>')
+            break
+     #continue for thins like opening webpages or hidden files for access
+
+        else :
+            print ("Contraseña incorrecta", "Intente de nuevo")
+            i+=1
+            print (f'Nombre de usuario incorrecto. quedan {3-i} intentos')
+           
+
+logIn()
+
 
 #Generar e instanciar dataclass ItemSales contenedora de lista lifestore_products
 sales =  [ItemSales()]
