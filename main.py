@@ -220,7 +220,7 @@ def monthlySales():
                 
                 mSales[dictMonths[month]]+=1
     print("VENTAS POR MES")
-    sort(mSales
+    
     for key,value in mSales.items():
         print(f'Mes: {key} Ventas: {value}')
 
