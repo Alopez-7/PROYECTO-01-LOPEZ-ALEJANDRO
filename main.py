@@ -34,7 +34,7 @@ def logIn():
             exit()
         print("-------------------------")
         print("Iniciar Sesion")
-        username = input("Usernaeme:")
+        username = input("Username:")
         if username == "SuperUser" :
             print ("Escriba Contraseña")
             break
@@ -105,7 +105,7 @@ for reviewt in reviews:
 
 
 
-def getTopSearches(productSearches:List[TopSearches],qty:int=5):
+def getTopSearches(productSearches:List[TopSearches],qty:int=10):
     """Funcion para obeter productos mas buscados"""
     sortedBySearches = sorted(productSearches,key=lambda x:x.searches, reverse=True)
     topSearches = sortedBySearches[0:qty]
@@ -140,7 +140,7 @@ def makeCategoriesList(productSales:List[ItemSales]):
     return prodCategories
 
 
-def worstProductsByCat(products:dict,qty:int=5):
+def worstProductsByCat(products:dict,qty:int=10):
     """Funcion para obtener y ordener los 5 productos menos vendidos por categoria"""
     catSales = {}
     
@@ -256,13 +256,16 @@ def anualProfit():
 def monthlySales():
     
     mSales={}
+    mSalesCash={}
     print("------------------------------------------------------------------------------------------------------------------------")
     for month in range(1,13):
         mSales[dictMonths[month]]=0
+        mSalesCash[dictMonths[month]]=0
         for sale in listOfSales:
             if int(sale.month)==month:
                 
                 mSales[dictMonths[month]]+=1
+                mSalesCash[dictMonths[month]]+=sale.price
     print("VENTAS PROMEDIO POR MES")
     avgSM=0
     for value in mSales.values():
@@ -275,6 +278,13 @@ def monthlySales():
  
     for value in sort_orders:
         print(f'Mes: {value[0]} Ventas: {value[1]}')
+    print("------------------------------------------------------------------------------------------------------------------------")
+    print("GANANCIAS POR MES")
+    sort_orders2 = sorted(mSalesCash.items(), key=lambda x: x[1], reverse=True)
+ 
+    for value in sort_orders2:
+        print(f'Mes: {value[0]} Ventas: ${value[1]}')
+        
 
   
             
