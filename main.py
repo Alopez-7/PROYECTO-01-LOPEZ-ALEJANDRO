@@ -1,9 +1,10 @@
+from functools import total_ordering
 from hashlib import new
 from math import prod
 from typing import List
 from unicodedata import category
 from lifestore_file import lifestore_products, lifestore_sales,lifestore_searches
-from classes import ItemSales, TopSearches,ItemReviews,ProductSales
+from classes import ItemSales, TopSearches,ItemReviews,ProductSales,ProductSalesDate
 from pprint import pprint
 from datetime import datetime
 
@@ -53,6 +54,7 @@ def getTopSearches(productSearches:List[TopSearches],qty:int=5):
     """Funcion para obeter productos mas buscados"""
     sortedBySearches = sorted(productSearches,key=lambda x:x.searches, reverse=True)
     topSearches = sortedBySearches[0:qty]
+    print("------------------------------------------------------------------------------------------------------------------------") 
     print("Productos Mas Buscados")
     for items in topSearches:
          print(f'\t  Nombre: {items.productName} ID: {items.idProduct} Ventas: {items.searches} ')
@@ -62,6 +64,7 @@ def getTopSales(productSales:List[ItemSales],qty:int=5):
     """Funcion para obetener productos mas vendidos"""
     sortedBySales = sorted(productSales, key=lambda x: x.sales,reverse=True)
     topSales = sortedBySales[0:qty]
+    print("------------------------------------------------------------------------------------------------------------------------")
     print("Productos Mas Vendidos")
     for items in topSales:
         print(f'\t  Nombre: {items.productName} ID: {items.idProduct} Ventas: {items.sales} ')
@@ -85,7 +88,8 @@ def makeCategoriesList(productSales:List[ItemSales]):
 def worstProductsByCat(products:dict,qty:int=5):
     """Funcion para obtener y ordener los 5 productos menos vendidos por categoria"""
     catSales = {}
-    print("IMPRIMIENDO PRODCUTOS MENOS VENDIDOS")
+    
+   
     
     for cat in products.keys():
         n=0
@@ -102,6 +106,7 @@ def worstProductsByCat(products:dict,qty:int=5):
         lSales[item].append(sortedList[0:qty])
         
     for key in lSales.keys():
+        print("------------------------------------------------------------------------------------------------------------------------")
         print(f'Categoria {key} Menos Vendidos:')
         pprint(lSales[key])
            
@@ -110,7 +115,7 @@ def worstProductsByCat(products:dict,qty:int=5):
 def worstProductSearchesByCat(products:dict,qty:int=10):
     """Funcion para obtener y ordener los productos menos vendidos por categoria"""
     catSearches = {}
-    print("IMPRIMIENDO PRODCUTOS MENOS BUSCADOS")
+   
     
     for cat in products.keys():
         n=0
@@ -127,6 +132,7 @@ def worstProductSearchesByCat(products:dict,qty:int=10):
         lSearches[item].append(sortedList[0:qty])
         
     for key in lSearches.keys():
+        print("------------------------------------------------------------------------------------------------------------------------")
         print(f'Categoria {key} Menos Buscados:')
         pprint(lSearches[key])
 
@@ -152,11 +158,12 @@ def scoreAvg():
             topRatedList[key] = value
         else:
             worstProductList[key] = value
-
-    print("Mejor Calificados:")
+    print("------------------------------------------------------------------------------------------------------------------------")
+    print("MEJOR CALIFICADOS:")
     for key,value in topRatedList.items():
         print(f'Producto: {key} Calificacion: {value}')
-    print("Peor Calificados:")
+    print("------------------------------------------------------------------------------------------------------------------------")    
+    print("PEOR CALIFICADOS:")
     for key,value in worstProductList.items():
         print(f'Producto: {key} Calificacion: {value}')
     return(reviewAvg)    
@@ -168,20 +175,69 @@ listOfSales = [ProductSales()]
 listOfSales.clear()
 
 for sale in lifestore_sales:
-    listOfSales.append(ProductSales(idProduct=sale[1],date=sale[3]))
+    listOfSales.append(ProductSales(idProduct=sale[1],date=sale[3],
+    day=sale[3][0:2],month=sale[3][3:5],year=sale[3][6:10],returned=bool(sale[4])))
 
-i=0
 
-for sale in listOfSales:
-    if sale.idProduct == lifestore_products[i][0]:
-        print("TEEST")
-    i+=1    
+
+for product in lifestore_products:
+    i=0
+    for sale in listOfSales:
+        if product[0] == sale.idProduct:
+            listOfSales[i].price=product[2]
+            listOfSales[i].productName=product[1]
+        i+=1    
     
-print(lifestore_products[0][2])
+def anualProfit():
+    print("------------------------------------------------------------------------------------------------------------------------")
+    totalEarnings=0
+    for sale in listOfSales:
+        if not sale.returned:
+            totalEarnings += sale.price
+    print(f'Ganancia anual: ${totalEarnings}')
+
+def monthlySales():
+    dictMonths={
+        1:"Enero",
+        2:"Febrero",
+        3:"Marzo",
+        4:"Abril",
+        5:"Mayo",
+        6:"Junio",
+        7:"Julio",
+        8:"Agosto",
+        9:"Septiembre",
+        10:"Octubre",
+        11:"Noviembre",
+        12:"Diciembre"
+    }
+    mSales={}
+    print("----------------------------------------")
+    for month in range(1,13):
+        mSales[dictMonths[month]]=0
+        for sale in listOfSales:
+            if int(sale.month)==month:
+                
+                mSales[dictMonths[month]]+=1
+    print("VENTAS POR MES")
+    sort(mSales
+    for key,value in mSales.items():
+        print(f'Mes: {key} Ventas: {value}')
+
+
 
 print("GENERANDO REPORTE")
+
 getTopSales(sales)
+
 getTopSearches(searches)
+
 worstProductsByCat(makeCategoriesList(sales))
+
 worstProductSearchesByCat(makeCategoriesList(sales))
+
 scoreAvg()
+anualProfit()
+monthlySales()
+
+

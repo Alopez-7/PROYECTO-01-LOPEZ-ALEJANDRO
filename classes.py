@@ -1,3 +1,4 @@
+from calendar import month
 from dataclasses import dataclass
 from itertools import product
 from mimetypes import init
@@ -41,4 +42,17 @@ class ProductSales:
     productName: str =''
     idProduct: str =""
     date: str=""
+    day: str=""
+    month: str=""
+    year: str=""
     price:int = 0
+    returned:bool=False
+@dataclass
+class ProductSalesDate:
+    productName: str =''
+    idProduct: str =""
+    day: str=""
+    month: str=""
+    year: str=""
+    price:int = 0
+    returned:bool=False
