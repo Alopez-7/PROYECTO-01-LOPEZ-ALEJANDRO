@@ -297,15 +297,10 @@ def monthlySales():
 
 
 print("GENERANDO REPORTE")
-
 getTopSales(sales)
-
 getTopSearches(searches)
-
 worstProductsByCat(makeCategoriesList(sales))
-
 worstProductSearchesByCat(makeCategoriesList(sales))
-
 scoreAvg()
 anualProfit()
 monthlySales()
