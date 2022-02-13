@@ -1,8 +1,10 @@
 # PROYECTO-01-LOPEZ-ALEJANDRO
-Pryecto Emtech
-Alejandro Lopez Gonzalez
-alejandro.lopezgzz7@gmail.com
-Grupo DataDarks
-CREDENCIAL DE ACCESO
-SuperUser admin
+## Proyecto Emtech <br />
+
+### Informacion <br />
+Alejandro Lopez Gonzalez<br />
+alejandro.lopezgzz7@gmail.com<br />
+Grupo DataDarks<br />
+CREDENCIAL DE ACCESO<br />
+SuperUser admin<br />
 
