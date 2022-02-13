@@ -11,6 +11,11 @@ from pprint import pprint
 from datetime import datetime
 from calendar import monthrange
 
+
+
+#CREDENCIAL DE ACCESO
+#Usuario: SuperUser
+#Contrasena: admin
 dictMonths={
         1:"Enero",
         2:"Febrero",
